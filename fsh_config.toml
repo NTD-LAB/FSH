@@ -1,0 +1,98 @@
+# FSH (Folder Shell Protocol) Configuration File
+# This file configures the FSH server and available folders
+
+[server]
+# Server binding configuration
+host = "127.0.0.1"           # Listen on localhost only (use "0.0.0.0" for all interfaces)
+port = 2222                  # Port to listen on
+max_connections = 10         # Maximum concurrent connections
+connection_timeout_seconds = 30    # Connection timeout
+session_timeout_minutes = 60       # Session timeout
+
+[security]
+# Security and authentication settings
+require_authentication = true      # Whether to require authentication
+auth_methods = ["token"]           # Available authentication methods
+max_failed_attempts = 3           # Max failed auth attempts before blocking
+enable_logging = true             # Enable security event logging
+log_file = "fsh_server.log"       # Log file path (optional)
+
+# Example folder configurations
+# Each [[folders]] entry defines a folder that can be accessed via FSH
+
+[[folders]]
+name = "Home Documents"
+path = "C:\\Users\\%USERNAME%\\Documents"  # Windows path (use forward slashes for Unix)
+permissions = ["read", "write", "execute"]
+shell_type = "powershell"                  # powershell, cmd, bash, git-bash
+description = "User documents folder"
+readonly = false
+allowed_commands = [
+    "ls", "dir", "cat", "type", "echo", "pwd", "cd", "mkdir", "rmdir",
+    "cp", "copy", "mv", "move", "rm", "del", "git", "code"
+]
+blocked_commands = [
+    "format", "shutdown", "reboot", "passwd", "su", "sudo"
+]
+
+[folders.environment_vars]
+PROJECT_TYPE = "generic"
+FSH_FOLDER = "documents"
+
+[[folders]]
+name = "Development Projects"
+path = "C:\\Projects"
+permissions = ["read", "write", "execute"]
+shell_type = "powershell"
+description = "Development projects folder"
+readonly = false
+allowed_commands = [
+    # File operations
+    "ls", "dir", "cat", "type", "echo", "pwd", "cd", "mkdir", "rmdir",
+    "cp", "copy", "mv", "move", "rm", "del", "find", "grep",
+
+    # Development tools
+    "git", "npm", "yarn", "node", "python", "pip", "cargo", "rustc",
+    "go", "java", "mvn", "gradle", "make", "cmake",
+
+    # Editors
+    "code", "vim", "nano"
+]
+blocked_commands = [
+    "format", "shutdown", "reboot", "passwd", "su", "sudo", "chmod", "chown"
+]
+
+[folders.environment_vars]
+PROJECT_TYPE = "development"
+NODE_ENV = "development"
+
+# Example of a read-only folder
+[[folders]]
+name = "Read-Only Documents"
+path = "C:\\Users\\Public\\Documents"
+permissions = ["read", "execute"]
+shell_type = "cmd"
+description = "Read-only access to public documents"
+readonly = true
+allowed_commands = ["ls", "dir", "cat", "type", "find", "grep", "head", "tail"]
+blocked_commands = ["del", "rm", "rmdir", "copy", "move", "mkdir"]
+
+# Example of a Git repository folder with Git Bash
+[[folders]]
+name = "Git Repository"
+path = "C:\\GitRepos\\MyProject"
+permissions = ["read", "write", "execute"]
+shell_type = "git-bash"
+description = "Git repository with bash environment"
+readonly = false
+allowed_commands = [
+    # Git commands
+    "git", "ls", "cat", "echo", "pwd", "cd", "mkdir", "rm", "cp", "mv",
+    # Development tools that work well with Git Bash
+    "node", "npm", "python", "pip", "code", "vim", "nano"
+]
+blocked_commands = ["format", "shutdown", "reboot"]
+
+[folders.environment_vars]
+PROJECT_TYPE = "git"
+GIT_EDITOR = "vim"

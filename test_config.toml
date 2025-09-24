@@ -1,0 +1,172 @@
+[server]
+host = "127.0.0.1"
+port = 2222
+max_connections = 10
+connection_timeout_seconds = 30
+session_timeout_minutes = 60
+
+[security]
+require_authentication = false
+auth_methods = ["token"]
+max_failed_attempts = 3
+enable_logging = true
+
+[[folders]]
+name = "test-folder"
+path = "C:/Windows/System32"
+permissions = [
+    "Read",
+    "Write",
+    "Execute",
+]
+shell_type = "PowerShell"
+allowed_commands = [
+    "ls",
+    "dir",
+    "cat",
+    "type",
+    "echo",
+    "pwd",
+    "cd",
+    "mkdir",
+    "rmdir",
+    "cp",
+    "copy",
+    "mv",
+    "move",
+    "rm",
+    "del",
+    "find",
+    "grep",
+    "head",
+    "tail",
+    "wc",
+    "sort",
+    "uniq",
+    "git",
+    "npm",
+    "yarn",
+    "node",
+    "python",
+    "python3",
+    "pip",
+    "pip3",
+    "cargo",
+    "rustc",
+    "go",
+    "java",
+    "javac",
+    "mvn",
+    "gradle",
+    "make",
+    "cmake",
+    "code",
+    "vim",
+    "nano",
+    "emacs",
+    "curl",
+    "wget",
+    "tar",
+    "zip",
+    "unzip",
+    "which",
+    "whereis",
+]
+blocked_commands = [
+    "format",
+    "fdisk",
+    "dd",
+    "mkfs",
+    "shutdown",
+    "reboot",
+    "halt",
+    "poweroff",
+    "passwd",
+    "su",
+    "sudo",
+    "runas",
+    "chown",
+    "chmod",
+    "chgrp",
+    "netstat",
+    "ss",
+    "nmap",
+    "kill",
+    "killall",
+    "taskkill",
+    "apt",
+    "yum",
+    "dnf",
+    "pacman",
+    "brew",
+    "choco",
+]
+description = "Test folder for validation"
+readonly = false
+
+[folders.environment_vars]
+
+[[folders]]
+name = "dev-tools"
+path = "C:/Users/aaron/RustroverProjects"
+permissions = [
+    "Read",
+    "Write",
+    "Execute",
+]
+shell_type = "PowerShell"
+allowed_commands = ["*"]
+blocked_commands = [
+    "format",
+    "fdisk",
+    "dd",
+    "mkfs",
+    "shutdown",
+    "reboot",
+    "halt",
+    "poweroff",
+    "passwd",
+    "su",
+    "sudo",
+    "runas",
+    "netstat",
+    "ss",
+    "nmap",
+    "kill",
+    "killall",
+    "taskkill",
+    "reg",
+    "regedit",
+    "diskpart",
+    "bcdedit",
+    "schtasks",
+    "sc",
+    "net",
+    "gpupdate",
+    "dism",
+    "powercfg",
+    "defrag",
+    "chkdsk",
+    "robocopy",
+]
+# System-aware commands that need access to system environment
+system_aware_commands = [
+    "claude",
+    "code",
+    "cursor",
+    "npm",
+    "yarn",
+    "pnpm",
+    "node",
+    "python",
+    "pip",
+    "cargo",
+    "rustc",
+    "git",
+    "gh",
+    "docker",
+]
+description = "Development tools and projects folder"
+readonly = false
+
+[folders.environment_vars]
